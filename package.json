@@ -2,7 +2,7 @@
   "name": "mtfscrolllist",
   "version": "1.0.0",
   "description": "Virtualized infinite scrolling list",
-  "main": "index.js",
+  "main": "mtfscrolllist.js",
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack-dev-server"

@@ -2,7 +2,7 @@ body {
     background-color: #f7f7f7;
 }
 .scrolllist {
-    margin: 0 auto;
+    margin: 35% auto;
     width: 300px;
     height: 300px;
     overflow: auto;
