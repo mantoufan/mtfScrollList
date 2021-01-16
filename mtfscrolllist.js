@@ -1,6 +1,6 @@
 let G = Object.create(null)
-const init = ({ ele = null, data = [], render = v => v, perPage = data.length, onTop = () => {}, onBottom = () => {}, onPullDownStart = () => {}, onPullDownMove = () => {}, onPullDownEnd = () => {} }) => {
-  G = { ele, render, startIndex: 0, perPage, onTop, onBottom, onPullDownStart, onPullDownMove, onPullDownEnd }
+const init = ({ ele = null, data = [], render = () => document.createElement('div'), perPage = data.length, onTop = () => {}, onBottom = () => {}, onPullDownStart = () => {}, onPullDownMove = () => {}, onPullDownEnd = () => {} }) => {
+  G = { ele, tpl: ele.innerText, render, startIndex: 0, perPage, onTop, onBottom, onPullDownStart, onPullDownMove, onPullDownEnd }
   refresh(data)
   pullDownListener()
 }
@@ -117,56 +117,72 @@ const throttle = (fn, wait, debounce) => {
 }
 /** 监听滚动事件 */
 const scrollListener = () => {
-  const topDom = () => {
+  const topDom = (cb = () => {}) => {
     Dom.clearBottom()
     if (Dom.cache.top.isEmpty()) {
-      const data = G.onTop()
-      if (data) { Dom.prepend(data) }
+      G.onTop(data => {
+        if (data) {
+          Dom.prepend(data)
+          cb(data)
+        }
+      })
     } else { Dom.prependFromCache() }
+    cb()
   }
-  const bottomDom = () => {
+  const bottomDom = (cb = () => {}) => {
     Dom.clearTop()
     if (Dom.cache.bottom.isEmpty()) {
-      const data = G.onBottom()
-      if (data) { Dom.append(data) }
+      G.onBottom(data => {
+        if (data) {
+          Dom.append(data)
+          cb(data)
+        }
+      })
     } else { Dom.appendFromCache() }
+    cb()
   }
   if (typeof IntersectionObserver === 'undefined') {
     const rect = G.ele.getBoundingClientRect()
     G.ele.addEventListener('scroll', throttle(() => {
-      const firstChild = G.ele.firstChild; const lastChild = G.ele.lastChild
+      const firstChild = G.ele.firstChild
+      const lastChild = G.ele.lastChild
       const rectTop = firstChild.getBoundingClientRect()
       const rectBottom = lastChild.getBoundingClientRect()
-      let curFirstChild = null; let curLastChild = null
+      let curFirstChild = null
+      let curLastChild = null
       if (curFirstChild !== firstChild && rectTop.bottom > rect.top) {
-        topDom()
-        curFirstChild = firstChild
+        topDom(() => (curFirstChild = firstChild))
       }
       if (curLastChild !== lastChild && rectBottom.top < rect.bottom) {
-        bottomDom()
-        curLastChild = lastChild
+        bottomDom(() => (curLastChild = lastChild))
       }
     }, 60))
   } else {
     const observe = (observer, ele) => {
       if (observer.ele !== ele) {
-        observer.disconnect()
-        observer.observe(ele)
-        observer.ele = ele
+        const rect = ele.getBoundingClientRect()
+        if (observer.bottom !== rect.bottom) {
+          observer.disconnect()
+          observer.observe(ele)
+          observer.ele = ele
+          observer.bottom = rect.bottom
+        }
       }
     }
     const topObserver = new window.IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
-        topDom()
-        observe(topObserver, G.ele.firstChild)
-        observe(bottomObserver, G.ele.lastChild)
+        topDom(() => {
+          observe(topObserver, G.ele.firstChild)
+          observe(bottomObserver, G.ele.lastChild)
+        })
       }
     }, { root: G.ele, threshold: 0 })
     const bottomObserver = new window.IntersectionObserver(entries => {
       if (entries[0].isIntersecting) {
-        bottomDom()
-        observe(topObserver, G.ele.firstChild)
-        observe(bottomObserver, G.ele.lastChild)
+        bottomDom(() => {
+          observe(topObserver, G.ele.firstChild)
+          observe(bottomObserver, G.ele.lastChild)
+        })
       }
     }, { root: G.ele, threshold: 0 })
     observe(bottomObserver, G.ele.lastChild)

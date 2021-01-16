@@ -14,8 +14,10 @@ mtfScrollList({
     d.innerHTML = data
     return d
   },
-  onBottom () {
-    return data
+  onBottom (cb) {
+    setTimeout(() => {
+      cb(data)
+    }, 100)
   },
   onPullDownStart ({ startY }) {
     let d = document.getElementById('tip')
