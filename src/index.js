@@ -1,23 +1,23 @@
 import data from './data.js'
-import mtfScrollList from '../mtfscrolllist.js'
+import MtfScrollList from '../mtfscrolllist.js'
 import './style.css'
 
 const removeChild = (d) => d && d.parentNode && d.parentNode.removeChild(d)
-
-mtfScrollList({
+const mtfScrollList = new MtfScrollList()
+mtfScrollList.init({
   ele: document.getElementById('scrolllist'),
   data,
-  render (data, index) {
+  render ({ data, index }) {
     const d = document.createElement('div')
     d.setAttribute('index', index)
     d.id = 'id' + index
     d.innerHTML = data
     return d
   },
-  onBottom (cb) {
+  onBottom ({ cb }) {
     setTimeout(() => {
       cb(data)
-    }, 100)
+    }, 0)
   },
   onPullDownStart ({ startY }) {
     let d = document.getElementById('tip')
