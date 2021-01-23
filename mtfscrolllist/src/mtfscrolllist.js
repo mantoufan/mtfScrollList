@@ -250,7 +250,6 @@ export default class MtfScrollList {
     let startY = 0
     const start = e => {
       if (this.G.ele.scrollTop) { return }
-      e.preventDefault()
       startY = getY(e)
       this.G.ele.addEventListener(isSupportTouch ? 'touchmove' : 'mousemove', move)
       document.addEventListener(isSupportTouch ? 'touchend' : 'mouseup', end)

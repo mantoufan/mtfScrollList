@@ -1,4 +1,4 @@
-export default [
+const data = [
   '<p>文字内容01</p>',
   '<img src="https://cdn.mantoufan.com/202004090847027256_c_w_600_ext_jpg.webp" />',
   '<img src="https://cdn.mantoufan.com/201708220101510292_c_w_600_ext_jpg.webp" />',

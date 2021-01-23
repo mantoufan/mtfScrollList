@@ -1,0 +1,50 @@
+{
+  "name": "react-mtfscrolllist",
+  "version": "1.0.0",
+  "description": "React Virtualized infinite scrolling list 虚拟化无限滚动 下拉刷新列表",
+  "main": "dist/react-mtfscrolllist.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mantoufan/mtfScrollList.git"
+  },
+  "keywords": [
+    "react",
+    "infinite",
+    "scroll",
+    "virtualized",
+    "list",
+    "虚拟化",
+    "无限滚动",
+    "下拉刷新"
+  ],
+  "author": "Xiaoyu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mantoufan/mtfScrollList/issues"
+  },
+  "homepage": "https://github.com/mantoufan/mtfScrollList#readme",
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "babel-loader": "^8.2.2",
+    "mtfscrolllist": "^1.0.3",
+    "react": ">= 16.0.0",
+    "react-dom": ">= 16.0.0",
+    "standard": "^16.0.3",
+    "webpack": "^5.11.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.1",
+    "webpack-node-externals": "^2.5.2"
+  },
+  "peerDependencies": {
+    "mtfscrolllist": ">=1.0.3",
+    "react": ">= 16.0.0",
+    "react-dom": ">= 16.0.0"
+  },
+  "dependencies": {}
+}
