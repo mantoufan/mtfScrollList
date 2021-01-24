@@ -4,7 +4,7 @@ body {
 .scrolllist {
     margin: 50px auto;
     width: 300px;
-    max-height: 880px;
+    max-height: 380px;
     overflow: auto;
 }
 .scrolllist img {
