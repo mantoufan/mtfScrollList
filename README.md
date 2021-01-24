@@ -5,7 +5,7 @@ MTF滚动列表插件，支持虚拟化无限滚动，上拉到顶，下拉到�
 ### 特点
 1. 移动端 + PC
 2. 虚拟化，只渲染可视区域 + 根据滚动方向预先渲染下一区域
-3. 列表每一项**高度任意**，内容自适应
+3. 列表每一项**高度任意**，自适应内容
 4. 双向快速滚动，几乎无闪屏，平滑无感
 5. 双向缓存栈 + 文档碎片，复用多，渲染少，速度快
 6. 双向加载更多，上拉到顶 或 下拉到底，读取新数据
@@ -125,9 +125,9 @@ import ReactMtfScrollList from 'react-mtfscrolllist'
 ```javascript
 <ReactMtfScrollList 
   className="scrolllist"
-  data={this.state.data || []} // 可绑定props或state
+  data={this.state.data || []} // 可传入props或state
   perPage={6}
-  render={({data, index}) => <div key={index}/>{data}</div>}/> // 渲染列表每一项，支持传入React组件
+  render={({data, index}) => <div key={index}>{data}</div>} // 渲染列表每一项，支持传入React组件
   onTop={cb => {}}
   onBottom={cb => {}} 
   onPullDownStart={startY => {}} 
