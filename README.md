@@ -1,19 +1,19 @@
 # mtfScrollList
-MTF滚动列表插件，支持虚拟无限滚动，上拉刷新，下拉刷新
+MTF滚动列表插件，支持虚拟无限滚动，上拉到顶，下拉到底加载更多，下拉刷新。可在原生JS、React和Vue（未来）中使用。
 ## 无限滚动
 ![无限滚动.gif](https://i.loli.net/2021/01/24/ju5CpZwvtUVkHR1.gif)
 ### 特点
-1. 移动端 + PC，兼容IE10+
+1. 移动端 + PC
 2. 虚拟化，只渲染可视区域 + 根据滚动方向预先渲染
 3. 列表每一项**高度任意**，内容自适应
 4. 双向快速滚动，几乎无闪屏，平滑无感
 5. 双向缓存队列 + 文档碎片，复用多，渲染少，速度快
-6. 双向加载更多，上拉 或 下拉到底，读取新数据
+6. 双向加载更多，上拉到顶 或 下拉到底，读取新数据
 ## 下拉刷新
 ![下拉刷新.gif](https://i.loli.net/2021/01/24/pfYku1XM25IUcDG.gif)
 ### 特点
-1. 移动端 + PC，兼容IE10+
-2. 开箱即用，默认复用 无限滚动 加载数据逻辑
+1. 移动端 + PC
+2. 根据下拉距离，决定是否继续下拉，是否加载数据
 
 # 快速开始
 本插件打包采用`umd`模块化规范
@@ -52,28 +52,29 @@ require(['https://cdn.jsdelivr.net/npm/mtfscrolllist@1.0.3/dist/mtfscrolllist.mi
 </style>
 <div id="scrolllist" class="scrolllist"></div>
 <script>
+const data = [{id:1, text:'a'}, {id:2, img:'2.jpg'}]
 mtfScrollList.init({
-  ele: document.getElementById('scrolllist'),
-  perPage: 6,
-  data: [],
-  render ({ data, index }) {
+  ele: document.getElementById('scrolllist'), // 列表的DOM对象
+  perPage: 6, // 每页条数
+  data: data, // 初始数据
+  render ({ data, index }) { // 渲染列表的每一项
     const d = document.createElement('div')
     d.setAttribute('index', index)
     d.id = 'id' + index
-    d.innerHTML = data
+    d.innerHTML = data.text
     return d
   },
-  onTop ({ cb }) {
+  onTop ({ cb }) { // 上拉到顶，加载更多，将数据传入回调函数
+    setTimeout(() => {
+      cb(data)
+    }, 1500) // 模拟获取数据
+  },
+  onBottom ({ cb }) { // 下拉到底，加载更多，将数据传入回调函数
     setTimeout(() => {
       cb(data)
     }, 0)
   },
-  onBottom ({ cb }) {
-    setTimeout(() => {
-      cb(data)
-    }, 0)
-  },
-  onPullDownStart ({ startY }) {
+  onPullDownStart ({ startY }) {// 下拉刷新：刚开始下拉。可获得起始Y坐标
     let d = document.getElementById('tip')
     removeChild(d)
     d = document.createElement('div')
@@ -82,22 +83,22 @@ mtfScrollList.init({
     d.id = 'tip'
     document.body.appendChild(d)
   },
-  onPullDownMove ({ paddingTop }) {
+  onPullDownMove ({ paddingTop }) {// 下拉刷新：拖动下拉。可获得下拉距离
     const d = document.getElementById('tip')
     if (paddingTop < 50) d.innerHTML = '您已下拉' + paddingTop
-    else if (paddingTop > 100) return true // 禁止继续下拉
+    else if (paddingTop > 100) return true // 返回true，阻止继续下拉
     else d.innerHTML = '松开刷新'
     d.style.marginTop = (paddingTop >> 1) + 'px'
   },
-  onPullDownEnd ({ paddingTop, cb }) {
+  onPullDownEnd ({ paddingTop, cb }) {// 下拉刷新：结束下拉。可获得下拉距离，将数据传入回调函数
     const d = document.getElementById('tip')
-    if (paddingTop >= 50) {
+    if (paddingTop >= 50) { // 到达指定下拉距离，开始获取数据
       d.innerHTML = '开始为您刷新'
       setTimeout(() => {
         removeChild(d)
         cb(data)
       }, 1500)
-    } else {
+    } else { // 没有到到指定下拉距离，自动回弹
       removeChild(d)
     }
   }
@@ -124,7 +125,7 @@ import ReactMtfScrollList from 'react-mtfscrolllist'
 ```javascript
 <ReactMtfScrollList 
   className="scrolllist"
-  data={this.state.data || []}
+  data={this.state.data || []} // 可绑定props或state
   perPage={6}
   render={({data, index}) => <div key={index}/>{data}</div>}/> // 渲染列表每一项，支持传入React组件
   onTop={cb => {}}
