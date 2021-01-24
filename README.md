@@ -43,17 +43,30 @@ require(['https://cdn.jsdelivr.net/npm/mtfscrolllist@1.0.3/dist/mtfscrolllist.mi
 </script>
 ```
 ### 1.2 使用
-```javascript
+```html
+<style>
+.scrolllist {
+  height: 360px;
+  overflow: auto;
+}
+</style>
+<div id="scrolllist" class="scrolllist"></div>
+<script>
 mtfScrollList.init({
-  ele: document.getElementById('x'),
+  ele: document.getElementById('scrolllist'),
   perPage: 6,
-  data,
+  data: [],
   render ({ data, index }) {
     const d = document.createElement('div')
     d.setAttribute('index', index)
     d.id = 'id' + index
     d.innerHTML = data
     return d
+  },
+  onTop ({ cb }) {
+    setTimeout(() => {
+      cb(data)
+    }, 0)
   },
   onBottom ({ cb }) {
     setTimeout(() => {
@@ -89,10 +102,12 @@ mtfScrollList.init({
     }
   }
 })
+</script>
 ```
 ## 二 React
 ### 安装
 ```shell
+npm i mtfscrolllist -D
 npm i react-mtfscrolllist -D
 ```
 ### 引入
@@ -100,14 +115,22 @@ npm i react-mtfscrolllist -D
 import ReactMtfScrollList from 'react-mtfscrolllist'
 ```
 ### 使用
+```css
+.scrolllist {
+  height: 360px;
+  overflow: auto;
+}
+```
 ```javascript
 <ReactMtfScrollList 
-  data={}
-  perPage={}
-  render={}
-  onBottom={} 
-  onPullDownStart={} 
-  onPullDownMove={} 
-  onPullDownEnd={}
+  className="scrolllist"
+  data={this.state.data || []}
+  perPage={6}
+  render={({data, index}) => <div key={index}/>{data}</div>}/> // 渲染列表每一项，支持传入React组件
+  onTop={cb => {}}
+  onBottom={cb => {}} 
+  onPullDownStart={startY => {}} 
+  onPullDownMove={paddingTop => {}} 
+  onPullDownEnd={(paddingTop, cb) => {}}
 ></ReactMtfScrollList>
 ```
