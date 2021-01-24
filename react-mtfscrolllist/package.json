@@ -1,6 +1,6 @@
 {
   "name": "react-mtfscrolllist",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React Virtualized infinite scrolling list 虚拟化无限滚动 下拉刷新列表",
   "main": "dist/react-mtfscrolllist.js",
   "scripts": {

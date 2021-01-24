@@ -1,6 +1,6 @@
 {
   "name": "mtfscrolllist",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Virtualized infinite scrolling list 虚拟化无限滚动 下拉刷新列表",
   "main": "dist/mtfscrolllist.js",
   "scripts": {
