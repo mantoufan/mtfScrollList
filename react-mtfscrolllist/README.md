@@ -54,9 +54,10 @@ require(['https://cdn.jsdelivr.net/npm/mtfscrolllist@1.0.3/dist/mtfscrolllist.mi
 <script>
 const data = [{id:1, text:'a'}, {id:2, img:'2.jpg'}]
 mtfScrollList.init({
-  ele: document.getElementById('scrolllist'), // 列表的DOM对象
-  perPage: 6, // 每页条数
-  data: data, // 初始数据
+  ele: document.getElementById('scrolllist'), // 容器
+  data: data, // 初始数据，默认为空
+  startIndex: 6, // 起始索引，默认是 初始数据的长度。如果容器初始HTML不为空，推荐指定起始索引
+  perPage: 6, // 每页条数，默认是 5。如果容器初始HTML不为空，推荐指定每页条数
   render ({ data, index }) { // 渲染列表的每一项
     const d = document.createElement('div')
     d.setAttribute('index', index)
@@ -64,12 +65,12 @@ mtfScrollList.init({
     d.innerHTML = data.text
     return d
   },
-  onTop ({ cb }) { // 上拉到顶，加载更多，将数据传入回调函数
+  onTop ({ cb, page }) { // 上拉到顶，加载更多：回调函数，当前页数
     setTimeout(() => {
       cb(data)
     }, 1500) // 模拟获取数据
   },
-  onBottom ({ cb }) { // 下拉到底，加载更多，将数据传入回调函数
+  onBottom ({ cb, page }) { // 下拉到底，加载更多：回调函数，当前页数
     setTimeout(() => {
       cb(data)
     }, 0)

@@ -159,7 +159,7 @@ module.exports = class MtfScrollList {
     this.Dom = new MtfScrollListDom({ self: this })
   }
 
-  init ({ ele = null, data = [], render = () => document.createElement('div'), startIndex = 0, perPage = 5, onTop = () => {}, onBottom = () => {}, onPullDownStart = () => {}, onPullDownMove = () => {}, onPullDownEnd = () => {} }) {
+  init ({ ele = null, data = [], render = () => document.createElement('div'), startIndex = data.length, perPage = 5, onTop = () => {}, onBottom = () => {}, onPullDownStart = () => {}, onPullDownMove = () => {}, onPullDownEnd = () => {} }) {
     this.G = { ele, render, startIndex, perPage, onTop, onBottom, onPullDownStart, onPullDownMove, onPullDownEnd }
     this.Dom.init()
     if (data.length) this.refresh({ data })
