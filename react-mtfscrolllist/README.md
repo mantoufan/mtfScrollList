@@ -32,15 +32,7 @@ const mtfScrollList = new MtfScrollList()
 #### 1.1.2 浏览器
 引入
 ```html
-/** 引入 require.js */
-<script src="https://cdn.bootcdn.net/ajax/libs/require.js/2.3.6/require.min.js"></script>
-/** 加载 插件 */
-<script>
-require(['https://cdn.jsdelivr.net/npm/mtfscrolllist@1.0.3/dist/mtfscrolllist.min.js'], function (module) {
-  const MtfScrollList = module.default
-  const mtfScrollList = new MtfScrollList()
-})
-</script>
+<script src="https://cdn.jsdelivr.net/npm/mtfscrolllist@1.0.4/dist/mtfscrolllist.min.js"></script>
 ```
 ### 1.2 使用
 ```html
@@ -53,6 +45,7 @@ require(['https://cdn.jsdelivr.net/npm/mtfscrolllist@1.0.3/dist/mtfscrolllist.mi
 <div id="scrolllist" class="scrolllist"></div>
 <script>
 const data = [{id:1, text:'a'}, {id:2, img:'2.jpg'}]
+const mtfScrollList = new MtfScrollList()
 mtfScrollList.init({
   ele: document.getElementById('scrolllist'), // 容器
   data: data, // 初始数据，默认为空
