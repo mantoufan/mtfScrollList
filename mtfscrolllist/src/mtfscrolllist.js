@@ -137,12 +137,11 @@ class MtfScrollListDom {
   }
 
   init () {
-    this.self.G.ele.innerHTML = ''
     this.firstChild = document.createElement('div')
     this.lastChild = document.createElement('div')
     this.firstChild.style.height = this.lastChild.style.height = '1px'
-    this.self.G.ele.appendChild(this.firstChild)
     this.self.G.ele.appendChild(this.lastChild)
+    this.self.G.ele.insertBefore(this.firstChild, this.self.G.ele.firstChild)
   }
 
   clear () {
@@ -154,16 +153,16 @@ class MtfScrollListDom {
     this.cache.bottom.clear()
   }
 }
-export default class MtfScrollList {
+module.exports = class MtfScrollList {
   constructor () {
     this.G = Object.create(null)
     this.Dom = new MtfScrollListDom({ self: this })
   }
 
-  init ({ ele = null, data = [], render = () => document.createElement('div'), perPage = data.length, onTop = () => {}, onBottom = () => {}, onPullDownStart = () => {}, onPullDownMove = () => {}, onPullDownEnd = () => {} }) {
-    this.G = { ele, render, startIndex: 0, perPage, onTop, onBottom, onPullDownStart, onPullDownMove, onPullDownEnd }
+  init ({ ele = null, data = [], render = () => document.createElement('div'), startIndex = 0, perPage = 5, onTop = () => {}, onBottom = () => {}, onPullDownStart = () => {}, onPullDownMove = () => {}, onPullDownEnd = () => {} }) {
+    this.G = { ele, render, startIndex, perPage, onTop, onBottom, onPullDownStart, onPullDownMove, onPullDownEnd }
     this.Dom.init()
-    this.refresh({ data })
+    if (data.length) this.refresh({ data })
     this.scrollListener()
     this.pullDownListener()
   }
