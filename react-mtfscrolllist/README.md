@@ -32,7 +32,7 @@ const mtfScrollList = new MtfScrollList()
 #### 1.1.2 浏览器
 引入
 ```html
-<script src="https://cdn.jsdelivr.net/npm/mtfscrolllist@1.0.4/dist/mtfscrolllist.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mtfscrolllist@1.0.5/dist/mtfscrolllist.min.js"></script>
 ```
 ### 1.2 使用
 ```html
