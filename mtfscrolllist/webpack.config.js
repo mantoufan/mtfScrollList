@@ -27,7 +27,7 @@ module.exports = {
           loader: 'babel-loader?cacheDirectory',
           options: {
             presets: ['@babel/preset-env'],
-            plugins: [['@babel/plugin-transform-runtime', { corejs: 3 }], "@babel/plugin-transform-modules-umd"]
+            plugins: [['@babel/plugin-transform-runtime', { corejs: 3 }], "@babel/plugin-transform-modules-umd"],
           }
         }
       ]

@@ -213,12 +213,13 @@ module.exports = class MtfScrollList {
       if (rectTop.bottom > rect.top) topDom()
       if (rectBottom.top < rect.bottom) bottomDom()
     }
-    const correct = () => {
+    const correct = retryTime => {
+      if (retryTime > 2) return
       const firstHeight = this.Dom.firstChild.offsetHeight
       const lastHeight = this.Dom.lastChild.offsetTop + 1
       if ((firstHeight > 1 && this.G.ele.scrollTop < firstHeight) || (lastHeight > 1 && lastHeight > this.G.ele.offsetHeight && this.G.ele.scrollTop + this.G.ele.offsetHeight > lastHeight)) {
         scroll()
-        correct()
+        correct((retryTime || 0) + 1)
       }
     }
     if (typeof IntersectionObserver === 'undefined') {
