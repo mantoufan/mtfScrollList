@@ -1,6 +1,6 @@
 # mtfScrollList
 ![npm](https://img.shields.io/npm/v/mtfscrolllist)
-![npm bundle size (version)](https://img.shields.io/bundlephobia/minzip/mtfscrolllist/latest)
+![npm bundle size](https://img.shields.io/bundlephobia/minzip/mtfscrolllist)
 ![npm](https://img.shields.io/npm/dt/mtfscrolllist)  
 MTF滚动列表插件，支持虚拟化无限滚动，上拉到顶，下拉到底加载更多，下拉刷新。可在原生JS、React和Vue（未来）中使用。
 ## 无限滚动
